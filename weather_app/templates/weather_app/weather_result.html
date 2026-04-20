@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather in {{ weather.location }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .weather-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .weather-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .weather-header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .weather-header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .weather-main {
+            padding: 30px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .temperature {
+            font-size: 4em;
+            font-weight: bold;
+            color: #333;
+            margin: 20px 0;
+        }
+        
+        .weather-icon {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+        }
+        
+        .weather-description {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .detail-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .detail-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .back-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .back-button a {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        
+        .back-button a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .temperature {
+                font-size: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="weather-card">
+            <div class="weather-header">
+                <h1>{{ weather.location }}, {{ weather.country }}</h1>
+                <p>Last updated: {{ weather.observation_time }}</p>
+            </div>
+            
+            <div class="weather-main">
+                <div class="temperature">{{ weather.temperature }}°C</div>
+                <img src="{{ weather.weather_icon }}" alt="{{ weather.weather_description }}" class="weather-icon">
+                <div class="weather-description">{{ weather.weather_description }}</div>
+                <div class="feels-like">Feels like: {{ weather.feels_like }}°C</div>
+            </div>
+            
+            <div class="details-grid">
+                <div class="detail-item">
+                    <div class="detail-label">💧 Humidity</div>
+                    <div class="detail-value">{{ weather.humidity }}%</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">💨 Wind Speed</div>
+                    <div class="detail-value">{{ weather.wind_speed }} km/h</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">🧭 Wind Direction</div>
+                    <div class="detail-value">{{ weather.wind_dir }}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">🌡️ Pressure</div>
+                    <div class="detail-value">{{ weather.pressure }} mb</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">☔ Precipitation</div>
+                    <div class="detail-value">{{ weather.precip }} mm</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">☀️ UV Index</div>
+                    <div class="detail-value">{{ weather.uv_index }}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">👁️ Visibility</div>
+                    <div class="detail-value">{{ weather.visibility }} km</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="back-button">
+            <a href="{% url 'home' %}">← Check Another City</a>
+        </div>
+    </div>
+</body>
+</html>
